@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI Microskills Training</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        
+        .presentation {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .slide {
+            background: white;
+            padding: 60px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            min-height: 90vh;
+            display: none;
+        }
+        
+        .slide.active {
+            display: block;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 3em;
+            text-align: center;
+        }
+        
+        h2 {
+            color: #34495e;
+            margin-bottom: 20px;
+            font-size: 2.2em;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: #34495e;
+            margin: 25px 0 15px 0;
+            font-size: 1.5em;
+        }
+        
+        .demo-box {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .code-example {
+            background: #2c3e50;
+            color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .flex-demo {
+            display: flex;
+            gap: 10px;
+            padding: 20px;
+            background: #ecf0f1;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .flex-item {
+            background: #3498db;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            flex: 1;
+            border-radius: 5px;
+        }
+        
+        .grid-demo {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            padding: 20px;
+            background: #ecf0f1;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .grid-item {
+            background: #2ecc71;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 5px;
+        }
+        
+        .spacing-demo {
+            background: #f0f0f0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .margin-box {
+            background: #e74c3c;
+            color: white;
+            padding: 20px;
+            margin: 20px;
+            text-align: center;
+            border-radius: 5px;
+        }
+        
+        .padding-box {
+            background: #9b59b6;
+            color: white;
+            padding: 40px;
+            text-align: center;
+            border-radius: 5px;
+        }
+        
+        .nav-buttons {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+        
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #2980b9;
+        }
+        
+        button:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+        }
+        
+        .slide-counter {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: #34495e;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .highlight {
+            background: #f1c40f;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        ul {
+            margin-left: 30px;
+            margin-top: 15px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .responsive-demo {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .responsive-box {
+            background: #3498db;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .responsive-box {
+                background: #e74c3c;
+            }
+        }
+        
+        .position-demo {
+            position: relative;
+            height: 300px;
+            background: #ecf0f1;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .absolute-box {
+            position: absolute;
+            background: #e74c3c;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        
+        .relative-box {
+            position: relative;
+            background: #3498db;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            top: 20px;
+            left: 20px;
+        }
+        
+        .z-index-demo {
+            position: relative;
+            height: 200px;
+            margin: 20px 0;
+        }
+        
+        .z-box {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <div class="slide-counter">
+            <span id="current-slide">1</span> / <span id="total-slides">12</span>
+        </div>
+        
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>UI Microskills Training</h1>
+            <div style="text-align: center; margin-top: 50px;">
+                <h3>Building Better User Interfaces</h3>
+                <div style="margin-top: 50px; font-size: 1.2em;">
+                    <p><strong>Topics Covered:</strong></p>
+                    <ul style="list-style: none; margin-top: 30px; line-height: 2;">
+                        <li>📐 Page Anatomy & Hierarchy</li>
+                        <li>🎨 Layout Systems (Flexbox, Grid, Positioning)</li>
+                        <li>📏 Spacing & Alignment</li>
+                        <li>📱 Responsiveness</li>
+                        <li>🔄 Identifying Reusable UI</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 2: Page Anatomy & Hierarchy -->
+        <div class="slide">
+            <h2>1. Page Anatomy & Hierarchy</h2>
+            
+            <h3>Visual Hierarchy Principles</h3>
+            <ul>
+                <li><strong>Size:</strong> Larger elements draw more attention</li>
+                <li><strong>Color & Contrast:</strong> High contrast elements stand out</li>
+                <li><strong>Whitespace:</strong> Space creates focus and breathing room</li>
+                <li><strong>Typography:</strong> Font weight, size, and style create hierarchy</li>
+                <li><strong>Position:</strong> Top-left gets attention first (F-pattern)</li>
+            </ul>
+            
+            <div class="demo-box">
+                <h1 style="margin-bottom: 15px; font-size: 2em;">Primary Heading</h1>
+                <h2 style="margin-bottom: 10px; font-size: 1.5em; color: #666; border: none;">Secondary Heading</h2>
+                <p style="font-size: 1em; color: #888; margin-bottom: 10px;">Body text with regular emphasis</p>
+                <p style="font-size: 0.9em; color: #aaa;">Supporting text with less emphasis</p>
+            </div>
+            
+            <h3>Common Page Structure</h3>
+            <div class="demo-box" style="display: grid; grid-template-areas: 'header header' 'nav main' 'footer footer'; gap: 10px; min-height: 300px;">
+                <div style="grid-area: header; background: #3498db; color: white; padding: 20px; text-align: center;">Header</div>
+                <div style="grid-area: nav; background: #34495e; color: white; padding: 20px;">Navigation</div>
+                <div style="grid-area: main; background: #ecf0f1; padding: 20px;">Main Content</div>
+                <div style="grid-area: footer; background: #2c3e50; color: white; padding: 20px; text-align: center;">Footer</div>
+            </div>
+        </div>
+        
+        <!-- Slide 3: Flexbox Introduction -->
+        <div class="slide">
+            <h2>2.1 Layout Systems: Flexbox</h2>
+            
+            <h3>Flexbox Basics</h3>
+            <p>Flexbox is a one-dimensional layout method for arranging items in rows or columns.</p>
+            
+            <div class="code-example">
+/* Flexbox Container */
+.container {
+    display: flex;
+    flex-direction: row;  /* or column */
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Flex Items */
+.flex-item {
+    flex: 1;  /* grow to fill available space */
+}
+            </div>
+            
+            <h3>Flex Direction: Row (default)</h3>
+            <div class="flex-demo">
+                <div class="flex-item">Item 1</div>
+                <div class="flex-item">Item 2</div>
+                <div class="flex-item">Item 3</div>
+            </div>
+            
+            <h3>Flex Direction: Column</h3>
+            <div class="flex-demo" style="flex-direction: column; height: 200px;">
+                <div class="flex-item">Item 1</div>
+                <div class="flex-item">Item 2</div>
+                <div class="flex-item">Item 3</div>
+            </div>
+            
+            <h3>Common Flex Properties</h3>
+            <ul>
+                <li><strong>justify-content:</strong> Alignment along main axis (start, center, end, space-between, space-around)</li>
+                <li><strong>align-items:</strong> Alignment along cross axis (start, center, end, stretch)</li>
+                <li><strong>flex-wrap:</strong> Allow items to wrap to new lines</li>
+                <li><strong>gap:</strong> Space between flex items</li>
+            </ul>
+        </div>
+        
+        <!-- Slide 4: CSS Grid -->
+        <div class="slide">
+            <h2>2.2 Layout Systems: CSS Grid</h2>
+            
+            <h3>Grid Basics</h3>
+            <p>CSS Grid is a two-dimensional layout system for creating complex layouts.</p>
+            
+            <div class="code-example">
+.container {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-gap: 20px;
+}
+            </div>
+            
+            <h3>Basic Grid Example</h3>
+            <div class="grid-demo">
+                <div class="grid-item">1</div>
+                <div class="grid-item">2</div>
+                <div class="grid-item">3</div>
+                <div class="grid-item">4</div>
+                <div class="grid-item">5</div>
+                <div class="grid-item">6</div>
+            </div>
+            
+            <h3>Grid Template Areas</h3>
+            <div class="code-example">
+.container {
+    display: grid;
+    grid-template-areas:
+        "header header header"
+        "sidebar main main"
+        "footer footer footer";
+}
+            </div>
+            
+            <h3>When to Use Grid vs Flexbox</h3>
+            <ul>
+                <li><strong>Use Flexbox:</strong> For one-dimensional layouts (rows OR columns)</li>
+                <li><strong>Use Grid:</strong> For two-dimensional layouts (rows AND columns)</li>
+                <li><strong>Use Flexbox:</strong> For component-level layouts</li>
+                <li><strong>Use Grid:</strong> For page-level layouts</li>
+            </ul>
+        </div>
+        
+        <!-- Slide 5: Positioning Systems -->
+        <div class="slide">
+            <h2>2.3 Positioning Systems</h2>
+            
+            <h3>Position Values</h3>
+            <ul>
+                <li><strong>static:</strong> Default positioning (normal document flow)</li>
+                <li><strong>relative:</strong> Positioned relative to its normal position</li>
+                <li><strong>absolute:</strong> Positioned relative to nearest positioned parent</li>
+                <li><strong>fixed:</strong> Positioned relative to viewport</li>
+                <li><strong>sticky:</strong> Toggles between relative and fixed</li>
+            </ul>
+            
+            <h3>Relative vs Absolute</h3>
+            <div class="position-demo">
+                <div class="relative-box">Relative Position (top: 20px, left: 20px)</div>
+                <div class="absolute-box" style="top: 50px; right: 50px;">Absolute Position (top: 50px, right: 50px)</div>
+            </div>
+            
+            <h3>Z-Index Layering</h3>
+            <div class="z-index-demo">
+                <div class="z-box" style="background: #3498db; z-index: 1;">Z-Index: 1</div>
+                <div class="z-box" style="background: #e74c3c; z-index: 3; left: 50px; top: 50px;">Z-Index: 3</div>
+                <div class="z-box" style="background: #2ecc71; z-index: 2; left: 100px; top: 25px;">Z-Index: 2</div>
+            </div>
+            
+            <div class="code-example">
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+            </div>
+        </div>
+        
+        <!-- Slide 6: Spacing & Alignment -->
+        <div class="slide">
+            <h2>3. Spacing & Alignment</h2>
+            
+            <h3>Margin vs Padding</h3>
+            <div class="spacing-demo">
+                <div class="margin-box">This box has margin: 20px<br>(space outside)</div>
+                <div class="padding-box">This box has padding: 40px<br>(space inside)</div>
+            </div>
+            
+            <h3>Box Model</h3>
+            <div class="code-example">
+/* Box Model: Content + Padding + Border + Margin */
+.box {
+    width: 200px;        /* Content width */
+    padding: 20px;       /* Inner spacing */
+    border: 2px solid;   /* Border */
+    margin: 10px;        /* Outer spacing */
+}
+            </div>
+            
+            <h3>Consistent Spacing Tokens</h3>
+            <div class="demo-box">
+                <p><strong>Use consistent spacing values:</strong></p>
+                <ul>
+                    <li>Extra Small: 4px</li>
+                    <li>Small: 8px</li>
+                    <li>Medium: 16px</li>
+                    <li>Large: 24px</li>
+                    <li>Extra Large: 32px</li>
+                    <li>XXL: 48px</li>
+                </ul>
+            </div>
+            
+            <h3>CSS Custom Properties for Spacing</h3>
+            <div class="code-example">
+:root {
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+}
+
+.card {
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+            </div>
+        </div>
+        
+        <!-- Slide 7: Container & Breakpoints -->
+        <div class="slide">
+            <h2>3. Container Width & Breakpoints</h2>
+            
+            <h3>Container Patterns</h3>
+            <div class="code-example">
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.container-fluid {
+    width: 100%;
+    padding: 0 20px;
+}
+
+.container-narrow {
+    max-width: 800px;
+}
+            </div>
+            
+            <h3>Common Breakpoint Values</h3>
+            <div class="demo-box">
+                <ul>
+                    <li><strong>Mobile:</strong> 0 - 767px</li>
+                    <li><strong>Tablet:</strong> 768px - 1023px</li>
+                    <li><strong>Desktop:</strong> 1024px - 1439px</li>
+                    <li><strong>Wide Desktop:</strong> 1440px+</li>
+                </ul>
+            </div>
+            
+            <h3>Alignment Patterns</h3>
+            <div class="flex-demo" style="justify-content: flex-start;">
+                <div class="flex-item" style="flex: none; width: 100px;">Start</div>
+            </div>
+            <div class="flex-demo" style="justify-content: center;">
+                <div class="flex-item" style="flex: none; width: 100px;">Center</div>
+            </div>
+            <div class="flex-demo" style="justify-content: flex-end;">
+                <div class="flex-item" style="flex: none; width: 100px;">End</div>
+            </div>
+            <div class="flex-demo" style="align-items: stretch; height: 100px;">
+                <div class="flex-item">Stretch (Full Height)</div>
+            </div>
+        </div>
+        
+        <!-- Slide 8: Responsiveness Basics -->
+        <div class="slide">
+            <h2>4. Responsiveness</h2>
+            
+            <h3>Mobile-First Approach</h3>
+            <div class="code-example">
+/* Mobile styles (default) */
+.card {
+    padding: 16px;
+    font-size: 14px;
+}
+
+/* Tablet and up */
+@media (min-width: 768px) {
+    .card {
+        padding: 24px;
+        font-size: 16px;
+    }
+}
+
+/* Desktop and up */
+@media (min-width: 1024px) {
+    .card {
+        padding: 32px;
+        font-size: 18px;
+    }
+}
+            </div>
+            
+            <h3>Responsive Units</h3>
+            <div class="demo-box">
+                <ul>
+                    <li><strong>%:</strong> Relative to parent element</li>
+                    <li><strong>vw/vh:</strong> Viewport width/height</li>
+                    <li><strong>rem:</strong> Relative to root font size</li>
+                    <li><strong>em:</strong> Relative to parent font size</li>
+                    <li><strong>px:</strong> Fixed pixels (use sparingly)</li>
+                </ul>
+            </div>
+            
+            <div class="responsive-demo">
+                <div class="responsive-box" style="width: 100%;">Width: 100%</div>
+                <div class="responsive-box" style="width: 50%;">Width: 50%</div>
+                <div class="responsive-box" style="max-width: 300px;">Max-width: 300px</div>
+            </div>
+        </div>
+        
+        <!-- Slide 9: Responsive Patterns -->
+        <div class="slide">
+            <h2>4. Responsive Patterns</h2>
+            
+            <h3>Flexible Grids</h3>
+            <div class="code-example">
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+            </div>
+            
+            <h3>Min/Max Constraints</h3>
+            <div class="code-example">
+.card {
+    width: 100%;
+    min-width: 200px;
+    max-width: 400px;
+}
+
+.text-content {
+    width: clamp(300px, 50%, 800px);
+    /* min: 300px, preferred: 50%, max: 800px */
+}
+            </div>
+            
+            <h3>Responsive Typography</h3>
+            <div class="code-example">
+/* Fluid Typography */
+h1 {
+    font-size: clamp(1.5rem, 5vw, 3rem);
+}
+
+/* Responsive Type Scale */
+:root {
+    --fs-300: clamp(0.875rem, 2vw, 1rem);
+    --fs-400: clamp(1rem, 2.5vw, 1.25rem);
+    --fs-500: clamp(1.25rem, 3vw, 1.75rem);
+    --fs-600: clamp(1.5rem, 4vw, 2.5rem);
+}
+            </div>
+            
+            <h3>Common Responsive Patterns</h3>
+            <ul>
+                <li><strong>Stack on Mobile:</strong> Horizontal layouts become vertical</li>
+                <li><strong>Hide/Show:</strong> Different content for different screens</li>
+                <li><strong>Reorder:</strong> Change visual order based on screen size</li>
+                <li><strong>Adapt:</strong> Change component style (e.g., hamburger menu)</li>
+            </ul>
+        </div>
+        
+        <!-- Slide 10: Identifying Reusable UI -->
+        <div class="slide">
+            <h2>5. Identifying Reusable UI</h2>
+            
+            <h3>Component Thinking</h3>
+            <p>Look for patterns that repeat across your interface:</p>
+            <ul>
+                <li><strong>Visual Patterns:</strong> Similar styles, layouts, or behaviors</li>
+                <li><strong>Functional Patterns:</strong> Similar interactions or purposes</li>
+                <li><strong>Content Patterns:</strong> Similar data structures or displays</li>
+            </ul>
+            
+            <h3>Common Reusable Components</h3>
+            <div class="demo-box">
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                    <div>
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li>Headers</li>
+                            <li>Footers</li>
+                            <li>Sidebars</li>
+                            <li>Breadcrumbs</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Content</h4>
+                        <ul>
+                            <li>Cards</li>
+                            <li>Lists</li>
+                            <li>Tables</li>
+                            <li>Forms</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Feedback</h4>
+                        <ul>
+                            <li>Buttons</li>
+                            <li>Alerts</li>
+                            <li>Modals</li>
+                            <li>Tooltips</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Media</h4>
+                        <ul>
+                            <li>Image galleries</li>
+                            <li>Video players</li>
+                            <li>Carousels</li>
+                            <li>Icons</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Component Variations</h3>
+            <div class="code-example">
+/* Base Button */
+.btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Variations */
+.btn-primary { background: #3498db; color: white; }
+.btn-secondary { background: #95a5a6; color: white; }
+.btn-large { padding: 12px 24px; font-size: 18px; }
+.btn-small { padding: 4px 8px; font-size: 12px; }
+            </div>
+        </div>
+        
+        <!-- Slide 11: Best Practices -->
+        <div class="slide">
+            <h2>Best Practices Summary</h2>
+            
+            <h3>Layout</h3>
+            <ul>
+                <li>Use Flexbox for one-dimensional layouts</li>
+                <li>Use Grid for two-dimensional layouts</li>
+                <li>Avoid absolute positioning unless necessary</li>
+                <li>Use semantic HTML for better structure</li>
+            </ul>
+            
+            <h3>Spacing</h3>
+            <ul>
+                <li>Use consistent spacing tokens throughout</li>
+                <li>Prefer padding for internal spacing, margin for external</li>
+                <li>Use CSS custom properties for maintainable spacing</li>
+                <li>Consider the 8-point grid system</li>
+            </ul>
+            
+            <h3>Responsiveness</h3>
+            <ul>
+                <li>Design mobile-first</li>
+                <li>Use flexible units (%, rem, vw/vh)</li>
+                <li>Test on real devices, not just browser tools</li>
+                <li>Consider touch targets for mobile (min 44x44px)</li>
+            </ul>
+            
+            <h3>Reusability</h3>
+            <ul>
+                <li>Think in components, not pages</li>
+                <li>Create a consistent design system</li>
+                <li>Document your components</li>
+                <li>Use BEM or similar naming conventions</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="nav-buttons">
+        <button onclick="previousSlide()" id="prev-btn">Previous</button>
+        <button onclick="nextSlide()" id="next-btn">Next</button>
+    </div>
+    
+    <script>
+        let currentSlide = 1;
+        const totalSlides = document.querySelectorAll('.slide').length;
+        
+        document.getElementById('total-slides').textContent = totalSlides;
+        
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            
+            if (n > totalSlides) currentSlide = totalSlides;
+            if (n < 1) currentSlide = 1;
+            
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[currentSlide - 1].classList.add('active');
+            
+            document.getElementById('current-slide').textContent = currentSlide;
+            
+            // Update button states
+            document.getElementById('prev-btn').disabled = currentSlide === 1;
+            document.getElementById('next-btn').disabled = currentSlide === totalSlides;
+        }
+        
+        function nextSlide() {
+            currentSlide++;
+            showSlide(currentSlide);
+        }
+        
+        function previousSlide() {
+            currentSlide--;
+            showSlide(currentSlide);
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' && currentSlide < totalSlides) nextSlide();
+            if (e.key === 'ArrowLeft' && currentSlide > 1) previousSlide();
+        });
+        
+        // Initialize
+        showSlide(currentSlide);
+    </script>
+</body>
+</html>
